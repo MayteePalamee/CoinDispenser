@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="CoinDispenser.Coindispenser">
+    <Position X="3" Y="2.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAABAAGAAIAAAACAIIgAAAAAAAAAAAAAACAAAAA=</HashCode>
+      <FileName>Coindispenser.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="CoinDispenser.ConvertHelper">
+    <Position X="0.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAgAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAACAA=</HashCode>
+      <FileName>ConvertHelper.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CoinDispenser.Events" Collapsed="true">
+    <Position X="3" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAIAAAAAA=</HashCode>
+      <FileName>Events.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CoinDispenser.SerialPortHelper">
+    <Position X="0.5" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>SerialPortHelper.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CoinDispenser.Response">
+    <Position X="6" Y="0.5" Width="2.75" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AAwAgAAYAYgQEAEJlAAICIQACgAAAAIAAAEAAAgEACA=</HashCode>
+      <FileName>Response.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="CoinDispenser.IDevicesHelper" Collapsed="true">
+    <Position X="3" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAABAAAAAIAAAACAAIgAAAAAAAAAAAAAACAAAAA=</HashCode>
+      <FileName>DevicesHelper.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

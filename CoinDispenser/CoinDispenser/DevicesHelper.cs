@@ -6,13 +6,14 @@ using System.Threading.Tasks;
 
 namespace CoinDispenser
 {
-    public interface DevicesHelper
+    public interface IDevicesHelper
     {
-        Status Connect();
-        Status Transmitte(String command);
-        Status Disconnect();
-        Status Enabled();
-        Status Disabled();
-        Status Received();
+        Response Connect();
+        Response Transmitte(String command);
+        Response Disconnect();
+        Response Enabled();
+        Response Disabled();
+        Response Received();
+        Response Parallel(String command);
     }
 }
