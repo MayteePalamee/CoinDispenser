@@ -13,6 +13,24 @@ namespace CoinDispenser
     public class Coindispenser : SerialPortHelper
     {
         /// <summary>
+        /// Initial DeviceInfo data
+        /// </summary>
+        public Coindispenser()
+        {
+            new DeviceInfo
+            {
+                Ready = "00",
+                Enable = "3E",
+                Inhibit = "5E",
+                MotorProblem = "01",
+                Insufficient = "02",
+                DedectsCoin = "03",
+                Reserved = "04",
+                PrismSersorFailure = "05",
+                ShaftSersorFailure = "06"
+            };
+        }
+        /// <summary>
         /// <para>Declare the event for message events</para>
         /// </summary>
         public event EventHandler<Events> MessageEvent;

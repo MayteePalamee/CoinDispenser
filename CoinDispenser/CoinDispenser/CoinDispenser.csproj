@@ -50,7 +50,6 @@
     <Compile Include="Stated.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Application.config" />
     <None Include="ClassDiagram.cd" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
