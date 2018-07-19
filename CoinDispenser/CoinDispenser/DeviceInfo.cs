@@ -6,18 +6,9 @@ using System.Threading.Tasks;
 
 namespace CoinDispenser
 {
-    public class Response
+    public class DeviceInfo
     {
-        /**
-         * Default status 
-         **/
-        private String connect;
-        private String disconnect;
-        private String fault;
-        private String unavailable;
-        private String success;
         private String ready;
-
         private String enable;
         private String inhibit;
         private String motorProblem;
@@ -26,7 +17,9 @@ namespace CoinDispenser
         private String reserved;
         private String prismSersorFailure;
         private String shaftSersorFailure;
-
+        /// <summary>
+        /// 
+        /// </summary>
         public String Enable
         {
             get { return enable; }
@@ -57,11 +50,6 @@ namespace CoinDispenser
             get { return reserved; }
             set { reserved = value; }
         }
-        public String Connect
-        {
-            get { return connect; }
-            set { connect = value; }
-        }
         public String PrismSersorFailure
         {
             get { return prismSersorFailure; }
@@ -71,26 +59,6 @@ namespace CoinDispenser
         {
             get { return shaftSersorFailure; }
             set { shaftSersorFailure = value; }
-        }
-        public String Disconnect
-        {
-            get { return disconnect; }
-            set { disconnect = value; }
-        }
-        public String Fault
-        {
-            get { return fault; }
-            set { fault = value; }
-        }
-        public String Unavailable
-        {
-            get { return unavailable; }
-            set { unavailable = value; }
-        }
-        public String Success
-        {
-            get { return success; }
-            set { success = value; }
         }
         public String Ready
         {

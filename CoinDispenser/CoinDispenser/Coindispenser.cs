@@ -7,133 +7,130 @@ using System.IO.Ports;
 
 namespace CoinDispenser
 {
-    public class Coindispenser : SerialPortHelper, IDevicesHelper
+    /// <summary>
+    /// <para>Coin Dispenser class</para>
+    /// </summary>
+    public class Coindispenser : SerialPortHelper
     {
-        /**
-        * event delegate.
-        * Declare the event using EventHandler<T>
-        **/
-        public event EventHandler<Events> RaiseEvents;
-
-        /**
-         * delegate method handle raise event
-         **/
-        protected virtual void OnRaiseEvent(Events e)
+        /// <summary>
+        /// <para>Declare the event for message events</para>
+        /// </summary>
+        public event EventHandler<Events> MessageEvent;
+       
+        /// <summary>
+        /// <para>Declare the event for serial port events</para>
+        /// </summary>
+        public event EventHandler<Events> CoinDispenserEvent;
+        
+        /// <summary>
+        /// delegate method handle raise event
+        /// </summary>
+        /// <param name="e">message on events</param>
+        protected virtual void OnMessage(Events e)
         {
-            RaiseEvents?.Invoke(this, e);
+            MessageEvent?.Invoke(this, e);
         }
 
-        /**Initialzed**/
-        private SerialPort _serialPort = new SerialPort();
-        Response status;
-        public Response Connect()
+        /// <summary>
+        /// delegate method handle raise event
+        /// </summary>
+        /// <param name="e">message on events</param>
+        protected virtual void OnCoinDispenser(Events e)
         {
-            status = new Response();
+            CoinDispenserEvent?.Invoke(this, e);
+        }
+
+        private SerialPort _serialPort = new SerialPort();
+        Stated status;
+
+        /// <summary>
+        /// Connect to Devices.
+        /// </summary>
+        /// <returns>Boolean</returns>
+        public Boolean Connect()
+        {
+            bool result = false;
             try
             {
-                /*_serialPort = Initial();
-                _serialPort.Open();
+                _serialPort = Initial();
 
                 if (_serialPort.IsOpen){
 
-                }*/
-                status.Success = "connect On Connect!";
-                OnRaiseEvent(new Events(status.Success));
+                }
+                OnMessage(new Events("Connect"));
             }
             catch (Exception ex)
             {
-                status.Fault = ex.Message;
-                OnRaiseEvent(new Events(status.Fault));
+                OnMessage(new Events(ex.Message));
             }
-            return status;
+            return result;
         }
-
-        public Response Disabled()
+        /// <summary>
+        /// Disabled Devices.
+        /// </summary>
+        /// <returns>Boolean</returns>
+        public Boolean Disabled()
         {
-            status = new Response();
+            bool result = false;
             try
             {
 
             }
             catch (Exception ex)
             {
-                status.Fault = ex.Message;
-                OnRaiseEvent(new Events(status.Fault));
+                OnMessage(new Events(ex.Message));
             }
-            return status;
+            return result;
         }
 
-        public Response Disconnect()
+        /// <summary>
+        /// Enabled Devices.
+        /// </summary>
+        /// <returns>Boolean</returns>
+        public Boolean Enabled()
         {
-            status = new Response();
-            try
-            {
-
-            }
-            catch (Exception ex)
-            {
-                status.Fault = ex.Message;
-                OnRaiseEvent(new Events(status.Fault));
-            }
-            return status;
-        }
-
-        public Response Enabled()
-        {
-            status = new Response();
+            bool result = false;
             try
             {
                 
             }
             catch (Exception ex)
             {
-                status.Fault = ex.Message;
-                OnRaiseEvent(new Events(status.Fault));
+                OnMessage(new Events(ex.Message));
             }
-            return status;
+            return result;
         }
-
-        public Response Parallel(string command)
+        /// <summary>
+        /// Disconect Devices.
+        /// </summary>
+        /// <returns>Boolean</returns>
+        public Boolean Disconnect()
         {
-            status = new Response();
-            try
-            {
-                
-            }
-            catch (Exception ex)
-            {
-                status.Fault = ex.Message;
-                OnRaiseEvent(new Events(status.Fault));
-            }
-            return status;
-        }
-
-        public Response Received()
-        {
-            status = new Response();
-            try
-            {
-                
-            }
-            catch (Exception ex)
-            {
-                status.Fault = ex.Message;
-                OnRaiseEvent(new Events(status.Fault));
-            }
-            return status;
-        }
-
-        public Response Transmitte(string command)
-        {
-            status = new Response();
+            bool result = false;
             try
             {
 
             }
             catch (Exception ex)
             {
-                status.Fault = ex.Message;
-                OnRaiseEvent(new Events(status.Fault));
+                OnMessage(new Events(ex.Message));
+            }
+            return result;
+        }
+        /// <summary>
+        /// Send command to Devices.
+        /// </summary>
+        /// <returns>Boolean</returns>
+        public Stated Transmitter(string command)
+        {
+            status = new Stated();
+            try
+            {
+
+            }
+            catch (Exception ex)
+            {
+                OnMessage(new Events(ex.Message));
             }
             return status;
         }
