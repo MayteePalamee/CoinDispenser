@@ -19,7 +19,7 @@ namespace CoinDispenser
         {
             new DeviceInfo
             {
-                Ready = "00",
+                /*Ready = "00",
                 Enable = "3E",
                 Inhibit = "5E",
                 MotorProblem = "01",
@@ -27,7 +27,16 @@ namespace CoinDispenser
                 DedectsCoin = "03",
                 Reserved = "04",
                 PrismSersorFailure = "05",
-                ShaftSersorFailure = "06"
+                ShaftSersorFailure = "06"*/
+               Initial = "12", 
+               Ready = "00",
+               Empty = "",
+
+            };
+
+            new Request
+            {
+
             };
         }
         /// <summary>

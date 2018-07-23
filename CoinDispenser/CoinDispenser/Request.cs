@@ -7,26 +7,27 @@ using System.Threading.Tasks;
 namespace CoinDispenser
 {
     /// <summary>
-    /// Data Response
+    /// Command to device
     /// </summary>
-    public class Stated
+    public class Request
     {
-        private Boolean state;
-        private String description;
+        private String state;
+        private String reset;
         /// <summary>
         /// 
         /// </summary>
-        public Boolean State {
+        public String State
+        {
             get { return state; }
             set { state = value; }
         }
         /// <summary>
         /// 
         /// </summary>
-        public String Description
+        public String Reset
         {
-            get { return description; }
-            set { description = value; }
+            get { return reset; }
+            set { reset = value; }
         }
     }
 }

@@ -1,51 +1,52 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
   <Class Name="CoinDispenser.Coindispenser">
-    <Position X="3.25" Y="0.75" Width="1.5" />
-    <InheritanceLine Type="CoinDispenser.SerialPortHelper" FixedFromPoint="true">
-      <Path>
-        <Point X="2.5" Y="3.438" />
-        <Point X="3.25" Y="3.438" />
-      </Path>
-    </InheritanceLine>
+    <Position X="3" Y="0.5" Width="2.5" />
     <TypeIdentifier>
       <HashCode>AAQAAAAAAAAAAIAAAACAIIAAACAAAAAAAQCAAAAACAA=</HashCode>
       <FileName>Coindispenser.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="CoinDispenser.ConvertHelper">
-    <Position X="0.5" Y="0.75" Width="2" />
+    <Position X="0.5" Y="0.5" Width="2" />
     <TypeIdentifier>
       <HashCode>AAAAAgAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAACAA=</HashCode>
       <FileName>ConvertHelper.cs</FileName>
     </TypeIdentifier>
   </Class>
+  <Class Name="CoinDispenser.DeviceInfo">
+    <Position X="6" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AkAAUAAAARAAAAECAFAARgAQACQKAMAiCADAJgAAACQ=</HashCode>
+      <FileName>DeviceInfo.cs</FileName>
+    </TypeIdentifier>
+  </Class>
   <Class Name="CoinDispenser.Events">
-    <Position X="7" Y="0.75" Width="1.5" />
+    <Position X="7.75" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAIAAAAAA=</HashCode>
       <FileName>Events.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="CoinDispenser.Stated">
-    <Position X="5.25" Y="0.75" Width="1.5" />
+  <Class Name="CoinDispenser.Request">
+    <Position X="6" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAgAAAAIAAAAAAAAAAAAAAEAAAABAAAAAA=</HashCode>
-      <FileName>Stated.cs</FileName>
+      <HashCode>AAAAAAAEAAAABAAAAAAAAAAAAAAAAAAEAAAABAAAAAA=</HashCode>
+      <FileName>Request.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="CoinDispenser.SerialPortHelper">
-    <Position X="0.5" Y="2.75" Width="2" />
+    <Position X="0.5" Y="2.25" Width="2" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>SerialPortHelper.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="CoinDispenser.DeviceInfo">
-    <Position X="5.25" Y="0.75" Width="1.5" />
+  <Class Name="CoinDispenser.Stated">
+    <Position X="7.75" Y="2.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAgAAAAIAQgQAAEJFAAICAQACAAAAAAAAAEAAAgAACA=</HashCode>
-      <FileName>DeviceInfo.cs</FileName>
+      <HashCode>AAAAAAAAAAAgAAAAIAAAAAAAAAAAAAAEAAAABAAAAAA=</HashCode>
+      <FileName>Stated.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Font Name="Segoe UI" Size="9" />

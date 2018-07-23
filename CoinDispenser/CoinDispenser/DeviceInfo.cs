@@ -6,64 +6,163 @@ using System.Threading.Tasks;
 
 namespace CoinDispenser
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class DeviceInfo
     {
+        private String singlePayout;
+        private String multiplePayout;
+        private String payOutsuccess;
+        private String payOutfails;
         private String ready;
-        private String enable;
-        private String inhibit;
-        private String motorProblem;
-        private String insufficient;
-        private String dedectsCoin;
-        private String reserved;
-        private String prismSersorFailure;
-        private String shaftSersorFailure;
+        private String emptyNote;
+        private String stockLess;
+        private String noteJam;
+        private String overLength;
+        private String noteNotexit;
+        private String sensorError;
+        private String doubleNoteError;
+        private String motorError;
+        private String dispensingBusy;
+        private String sensorAdjusting;
+        private String initial;
+        private String empty;
         /// <summary>
         /// 
         /// </summary>
-        public String Enable
+        public String Empty
         {
-            get { return enable; }
-            set { enable = value; }
+            get { return empty; }
+            set { empty = value; }
         }
-        public String Inhibit
+        /// <summary>
+        /// 
+        /// </summary>
+        public String Initial
         {
-            get { return inhibit; }
-            set { inhibit = value; }
+            get { return initial; }
+            set { initial = value; }
         }
-        public String MotorProblem
+        /// <summary>
+        /// 
+        /// </summary>
+        public String SinglePayout
         {
-            get { return motorProblem; }
-            set { motorProblem = value; }
+            get { return singlePayout; }
+            set { singlePayout = value; }
         }
-        public String Insufficient
+        /// <summary>
+        /// 
+        /// </summary>
+        public String MultiplePayout
         {
-            get { return insufficient; }
-            set { insufficient = value; }
+            get { return multiplePayout; }
+            set { multiplePayout = value; }
         }
-        public String DedectsCoin
+        /// <summary>
+        /// 
+        /// </summary>
+        public String PayOutsuccess
         {
-            get { return dedectsCoin; }
-            set { dedectsCoin = value; }
+            get { return payOutsuccess; }
+            set { payOutsuccess = value; }
         }
-        public String Reserved
+        /// <summary>
+        /// 
+        /// </summary>
+        public String PayOutfails
         {
-            get { return reserved; }
-            set { reserved = value; }
+            get { return payOutfails; }
+            set { payOutfails = value; }
         }
-        public String PrismSersorFailure
-        {
-            get { return prismSersorFailure; }
-            set { prismSersorFailure = value; }
-        }
-        public String ShaftSersorFailure
-        {
-            get { return shaftSersorFailure; }
-            set { shaftSersorFailure = value; }
-        }
+        /// <summary>
+        /// 
+        /// </summary>
         public String Ready
         {
             get { return ready; }
             set { ready = value; }
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        public String EmptyNote
+        {
+            get { return emptyNote; }
+            set { emptyNote = value; }
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        public String StockLess
+        {
+            get { return stockLess; }
+            set { stockLess = value; }
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        public String NoteJam
+        {
+            get { return noteJam; }
+            set { noteJam = value; }
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        public String OverLength
+        {
+            get { return overLength; }
+            set { overLength = value; }
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        public String NoteNotexit
+        {
+            get { return noteNotexit; }
+            set { noteNotexit = value; }
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        public String SensorError
+        {
+            get { return sensorError; }
+            set { sensorError = value; }
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        public String DoubleNoteError
+        {
+            get { return doubleNoteError; }
+            set { doubleNoteError = value; }
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        public String MotorError
+        {
+            get { return motorError; }
+            set { motorError = value; }
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        public String DispensingBusy
+        {
+            get { return dispensingBusy; }
+            set { dispensingBusy = value; }
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        public String SensorAdjusting
+        {
+            get { return sensorAdjusting; }
+            set { sensorAdjusting = value; }
         }
     }
 }
