@@ -3,7 +3,7 @@
   <Class Name="CoinDispenser.Coindispenser">
     <Position X="3" Y="0.5" Width="2.5" />
     <TypeIdentifier>
-      <HashCode>AAQAAAAAAAAAAIAAAACAIIAAACAAAAAAAQCAAAAACAA=</HashCode>
+      <HashCode>AAQAAAAAAAAAAIAAAACAIIAAACAAAAAAAQGAAAAACAA=</HashCode>
       <FileName>Coindispenser.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -15,23 +15,23 @@
     </TypeIdentifier>
   </Class>
   <Class Name="CoinDispenser.DeviceInfo">
-    <Position X="6" Y="2.75" Width="1.5" />
+    <Position X="6" Y="3.5" Width="2" />
     <TypeIdentifier>
-      <HashCode>AkAAUAAAARAAAAECAFAARgAQACQKAMAiCADAJgAAACQ=</HashCode>
+      <HashCode>AAAAAAAAAQgYAAEJEAIQAAQCQCAAEEAAAgEAAAwAAGA=</HashCode>
       <FileName>DeviceInfo.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="CoinDispenser.Events">
-    <Position X="7.75" Y="0.5" Width="1.5" />
+    <Position X="8.25" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAIAAAAAA=</HashCode>
       <FileName>Events.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="CoinDispenser.Request">
-    <Position X="6" Y="0.5" Width="1.5" />
+    <Position X="6" Y="0.5" Width="2" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAEAAAABAAAAAAAAAAAAAAAAAAEAAAABAAAAAA=</HashCode>
+      <HashCode>AAAIAAAEAAAABAAAAAAAAAAAAAAAAAAEEAAABBAACAA=</HashCode>
       <FileName>Request.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -43,7 +43,7 @@
     </TypeIdentifier>
   </Class>
   <Class Name="CoinDispenser.Stated">
-    <Position X="7.75" Y="2.75" Width="1.5" />
+    <Position X="8.25" Y="2.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAgAAAAIAAAAAAAAAAAAAAEAAAABAAAAAA=</HashCode>
       <FileName>Stated.cs</FileName>

@@ -11,23 +11,25 @@ namespace CoinDispenser
     /// </summary>
     public class DeviceInfo
     {
-        private String singlePayout;
-        private String multiplePayout;
-        private String payOutsuccess;
-        private String payOutfails;
-        private String ready;
-        private String emptyNote;
-        private String stockLess;
-        private String noteJam;
-        private String overLength;
-        private String noteNotexit;
-        private String sensorError;
-        private String doubleNoteError;
-        private String motorError;
-        private String dispensingBusy;
-        private String sensorAdjusting;
-        private String initial;
+        private String initital;
         private String empty;
+        private String ready;
+        private String problemsRecovered;
+        private String problemsOccurred;
+        private String mortorProblem;
+        private String insufficientCoin;
+        private String dedectsCoin;
+        private String reserved;
+        private String prismSersorFailure;
+        private String shaftSersorFailure;
+        /// <summary>
+        /// 
+        /// </summary>
+        public String Initial
+        {
+            get { return initital; }
+            set { initital = value; }
+        }
         /// <summary>
         /// 
         /// </summary>
@@ -35,46 +37,6 @@ namespace CoinDispenser
         {
             get { return empty; }
             set { empty = value; }
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        public String Initial
-        {
-            get { return initial; }
-            set { initial = value; }
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        public String SinglePayout
-        {
-            get { return singlePayout; }
-            set { singlePayout = value; }
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        public String MultiplePayout
-        {
-            get { return multiplePayout; }
-            set { multiplePayout = value; }
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        public String PayOutsuccess
-        {
-            get { return payOutsuccess; }
-            set { payOutsuccess = value; }
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        public String PayOutfails
-        {
-            get { return payOutfails; }
-            set { payOutfails = value; }
         }
         /// <summary>
         /// 
@@ -87,82 +49,66 @@ namespace CoinDispenser
         /// <summary>
         /// 
         /// </summary>
-        public String EmptyNote
+        public String ProblemsRecovered
         {
-            get { return emptyNote; }
-            set { emptyNote = value; }
+            get { return problemsRecovered; }
+            set { problemsRecovered = value; }
         }
         /// <summary>
         /// 
         /// </summary>
-        public String StockLess
+        public String ProblemsOccurred
         {
-            get { return stockLess; }
-            set { stockLess = value; }
+            get { return problemsOccurred; }
+            set { problemsOccurred = value; }
         }
         /// <summary>
         /// 
         /// </summary>
-        public String NoteJam
+        public String MortorProblem
         {
-            get { return noteJam; }
-            set { noteJam = value; }
+            get { return mortorProblem; }
+            set { mortorProblem = value; }
         }
         /// <summary>
         /// 
         /// </summary>
-        public String OverLength
+        public String InsufficientCoin
         {
-            get { return overLength; }
-            set { overLength = value; }
+            get { return insufficientCoin; }
+            set { insufficientCoin = value; }
         }
         /// <summary>
         /// 
         /// </summary>
-        public String NoteNotexit
+        public String DedectsCoin
         {
-            get { return noteNotexit; }
-            set { noteNotexit = value; }
+            get { return dedectsCoin; }
+            set { dedectsCoin = value; }
         }
         /// <summary>
         /// 
         /// </summary>
-        public String SensorError
+        public String Reserved
         {
-            get { return sensorError; }
-            set { sensorError = value; }
+            get { return reserved; }
+            set { reserved = value; }
         }
         /// <summary>
         /// 
         /// </summary>
-        public String DoubleNoteError
+        public String PrismSersorFailure
         {
-            get { return doubleNoteError; }
-            set { doubleNoteError = value; }
+            get { return prismSersorFailure; }
+            set { prismSersorFailure = value; }
         }
         /// <summary>
         /// 
         /// </summary>
-        public String MotorError
+        public String ShaftSersorFailure
         {
-            get { return motorError; }
-            set { motorError = value; }
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        public String DispensingBusy
-        {
-            get { return dispensingBusy; }
-            set { dispensingBusy = value; }
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        public String SensorAdjusting
-        {
-            get { return sensorAdjusting; }
-            set { sensorAdjusting = value; }
+            get { return shaftSersorFailure; }
+            set { shaftSersorFailure = value; }
         }
     }
 }

@@ -13,6 +13,24 @@ namespace CoinDispenser
     {
         private String state;
         private String reset;
+        private String initial1;
+        private String initial2;
+        /// <summary>
+        /// 
+        /// </summary>
+        public String Initial1
+        {
+            get { return initial1; }
+            set { initial1 = value; }
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        public String Initial2
+        {
+            get { return initial2; }
+            set { initial2 = value; }
+        }
         /// <summary>
         /// 
         /// </summary>

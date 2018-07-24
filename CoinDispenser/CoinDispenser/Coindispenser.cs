@@ -19,24 +19,25 @@ namespace CoinDispenser
         {
             new DeviceInfo
             {
-                /*Ready = "00",
-                Enable = "3E",
-                Inhibit = "5E",
-                MotorProblem = "01",
-                Insufficient = "02",
-                DedectsCoin = "03",
-                Reserved = "04",
-                PrismSersorFailure = "05",
-                ShaftSersorFailure = "06"*/
                Initial = "12", 
                Ready = "00",
                Empty = "",
-
+               ProblemsRecovered = "3E",
+               ProblemsOccurred = "5E",
+               MortorProblem = "01",
+               InsufficientCoin = "02",
+               DedectsCoin = "03",
+               Reserved = "04",
+               PrismSersorFailure = "05",
+               ShaftSersorFailure = "06"
             };
 
             new Request
             {
-
+                Initial1 = "70",
+                Initial2 = "73",
+                State = "72",
+                Reset = "80",
             };
         }
         /// <summary>
@@ -82,7 +83,7 @@ namespace CoinDispenser
                 _serialPort = Initial();
 
                 if (_serialPort.IsOpen){
-
+                    _serialPort.DataReceived += _serialPortDataReceived;
                 }
                 OnMessage(new Events("Connect"));
             }
@@ -92,6 +93,12 @@ namespace CoinDispenser
             }
             return result;
         }
+
+        private void _serialPortDataReceived(object sender, SerialDataReceivedEventArgs e)
+        {
+            OnCoinDispenser(new Events("revceid"));
+        }
+
         /// <summary>
         /// Disabled Devices.
         /// </summary>
