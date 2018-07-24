@@ -17,7 +17,7 @@ namespace CoinDispenser
         /// </summary>
         public Coindispenser()
         {
-            new DeviceInfo
+            new Response
             {
                Initial = "12", 
                Ready = "00",

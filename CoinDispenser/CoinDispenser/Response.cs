@@ -9,7 +9,7 @@ namespace CoinDispenser
     /// <summary>
     /// 
     /// </summary>
-    public class DeviceInfo
+    public class Response
     {
         private String initital;
         private String empty;

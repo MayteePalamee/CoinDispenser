@@ -14,11 +14,11 @@
       <FileName>ConvertHelper.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="CoinDispenser.DeviceInfo">
+  <Class Name="CoinDispenser.Response">
     <Position X="6" Y="3.5" Width="2" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAQgYAAEJEAIQAAQCQCAAEEAAAgEAAAwAAGA=</HashCode>
-      <FileName>DeviceInfo.cs</FileName>
+      <FileName>Response.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="CoinDispenser.Events">
