@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.IO.Ports;
+using System.Threading;
 
 namespace CoinDispenser
 {
@@ -12,161 +9,286 @@ namespace CoinDispenser
     /// </summary>
     public class Coindispenser : SerialPortHelper
     {
-        /// <summary>
-        /// Initial DeviceInfo data
-        /// </summary>
-        public Coindispenser()
-        {
-            new Response
-            {
-               Initial = "12", 
-               Ready = "00",
-               Empty = "",
-               ProblemsRecovered = "3E",
-               ProblemsOccurred = "5E",
-               MortorProblem = "01",
-               InsufficientCoin = "02",
-               DedectsCoin = "03",
-               Reserved = "04",
-               PrismSersorFailure = "05",
-               ShaftSersorFailure = "06"
-            };
-
-            new Request
-            {
-                Initial1 = "70",
-                Initial2 = "73",
-                State = "72",
-                Reset = "80",
-            };
-        }
-        /// <summary>
-        /// <para>Declare the event for message events</para>
-        /// </summary>
-        public event EventHandler<Events> MessageEvent;
-       
-        /// <summary>
-        /// <para>Declare the event for serial port events</para>
-        /// </summary>
-        public event EventHandler<Events> CoinDispenserEvent;
-        
-        /// <summary>
-        /// delegate method handle raise event
-        /// </summary>
-        /// <param name="e">message on events</param>
-        protected virtual void OnMessage(Events e)
-        {
-            MessageEvent?.Invoke(this, e);
-        }
-
-        /// <summary>
-        /// delegate method handle raise event
-        /// </summary>
-        /// <param name="e">message on events</param>
-        protected virtual void OnCoinDispenser(Events e)
-        {
-            CoinDispenserEvent?.Invoke(this, e);
-        }
-
+        /*Initial = "12", 
+          Ready = "00",
+          Empty = "",
+          ProblemsRecovered = "3E",
+          ProblemsOccurred = "5E",
+          MortorProblem = "01",
+          InsufficientCoin = "02",
+          DedectsCoin = "03",
+          Reserved = "04",
+          PrismSersorFailure = "05",
+          ShaftSersorFailure = "06"
+          Initial1 = "70",
+          Initial2 = "73",
+          State = "72",
+          Reset = "80",*/
+        private String _invoke = "";
+        private InitialPort initPort;
         private SerialPort _serialPort = new SerialPort();
-        Stated status;
 
         /// <summary>
-        /// Connect to Devices.
+        /// dispense coin
+        ///  8140 coin dispense 1
+        ///  8141 coin dispense 2
+        ///  8142 coin dispense 3
+        ///  8143 coin dispense 4
+        ///  8144 coin dispense 5
+        ///  8145 coin dispense 6
+        ///  8146 coin dispense 7
+        ///  8147 coin dispense 8
+        ///  8148 coin dispense 9
+        ///  8149 coin dispense 10
+        ///  814A coin dispense 11
+        ///  814B coin dispense 12
+        ///  814C coin dispense 13
+        ///  814D coin dispense 14
+        ///  814E coin dispense 15
+        ///  814F coin dispense 16
         /// </summary>
-        /// <returns>Boolean</returns>
-        public Boolean Connect()
+        /// <param name="coin">int coin type</param>
+        /// <returns>boolean</returns>
+        public Boolean Dispense(int coin)
         {
-            bool result = false;
+            byte[] data = { };
+            bool state = false;
+            int count = 0;
             try
             {
-                _serialPort = Initial();
-
-                if (_serialPort.IsOpen){
-                    _serialPort.DataReceived += _serialPortDataReceived;
+                if (!_serialPort.IsOpen){
+                    _serialPort.Open();
                 }
-                OnMessage(new Events("Connect"));
-            }
-            catch (Exception ex)
-            {
-                OnMessage(new Events(ex.Message));
-            }
-            return result;
-        }
+                    if (_serialPort.IsOpen)
+                    {
+                    for (int index = 0; index < coin; index++)
+                    {
+                        data = ConvertHexToByte("80");
+                        _serialPort.Write(data, 0, data.Length);
+                        Thread.Sleep(1);
 
-        private void _serialPortDataReceived(object sender, SerialDataReceivedEventArgs e)
+                        data = ConvertHexToByte("8140");
+                        _serialPort.Write(data, 0, data.Length);
+                        Thread.Sleep(1);
+
+                        data = ConvertHexToByte("10");
+                        _serialPort.Write(data, 0, data.Length);
+                        Thread.Sleep(1);
+                        count++;
+                    }
+                    if(coin == count)
+                    {
+                        state = true;
+                    }
+                }
+               }
+            catch (Exception exception)
+            {
+                if (_serialPort.IsOpen)
+                {
+                    _serialPort.Close();
+                }
+                _invoke = Status.Unavailable.ToString();
+                Console.WriteLine("exception : " + exception);
+            }
+            return state;
+        }
+        /// <summary>
+        /// current status
+        /// </summary>
+        /// <returns>status</returns>
+        public String CurrentStatus()
         {
-            OnCoinDispenser(new Events("revceid"));
+            byte[] data = { };
+            bool state = false;
+            try
+            {
+                if (!_serialPort.IsOpen)
+                {
+                    _serialPort.Open();
+                }
+                if (Enable())
+                {
+                    if (_serialPort.IsOpen)
+                    {
+                       do
+                        {
+                            data = ConvertHexToByte("72");
+                            _serialPort.Write(data, 0, data.Length);
+                            Thread.Sleep(10);
+                            state = CallState(_serialPort);
+                        } while (state);
+                    }
+                }
+            }
+            catch (Exception exception)
+            {
+                if (_serialPort.IsOpen)
+                {
+                    _serialPort.Close();
+                }
+                _invoke = Status.Unavailable.ToString();
+                Console.WriteLine("exception : " + exception);
+            }
+            return _invoke;
+        }
+        /// <summary>
+        /// Reset Device
+        /// </summary>
+        /// <returns>Status</returns>
+        public String Reset()
+        {
+            byte[] data = { };
+            try
+            {
+                if (!_serialPort.IsOpen)
+                {
+                    _serialPort.Open();
+                }
+                if (Enable())
+                {
+                    if (_serialPort.IsOpen)
+                    {
+                        data = ConvertHexToByte("73");
+                        _serialPort.Write(data, 0, data.Length);
+
+                        CallState(_serialPort);
+                    }
+                }
+            }
+            catch (Exception exception)
+            {
+                if (_serialPort.IsOpen)
+                {
+                    _serialPort.Close();
+                }
+                _invoke = Status.Unavailable.ToString();
+                Console.WriteLine("exception : " + exception);
+            }
+            return _invoke;
         }
 
         /// <summary>
-        /// Disabled Devices.
+        /// Setter Serial NamePort.
         /// </summary>
-        /// <returns>Boolean</returns>
-        public Boolean Disabled()
+        /// <param name="port">String NamePort</param>
+        public void SetPort(String port)
         {
-            bool result = false;
-            try
-            {
+                initPort = new InitialPort();
+                initPort.Comport = port;
+                initPort.BaudRate = 9600;
+                initPort.DataBits = 8;
+                initPort.DtrEnable = true;
 
-            }
-            catch (Exception ex)
-            {
-                OnMessage(new Events(ex.Message));
-            }
-            return result;
-        }
-
-        /// <summary>
-        /// Enabled Devices.
-        /// </summary>
-        /// <returns>Boolean</returns>
-        public Boolean Enabled()
-        {
-            bool result = false;
-            try
-            {
-                
-            }
-            catch (Exception ex)
-            {
-                OnMessage(new Events(ex.Message));
-            }
-            return result;
+                _serialPort = Initial(initPort);
         }
         /// <summary>
-        /// Disconect Devices.
+        /// Getter Serial NamePort
         /// </summary>
-        /// <returns>Boolean</returns>
-        public Boolean Disconnect()
+        /// <returns>String NamePort</returns>
+        public String GetPort()
         {
-            bool result = false;
-            try
-            {
-
-            }
-            catch (Exception ex)
-            {
-                OnMessage(new Events(ex.Message));
-            }
-            return result;
+            return _serialPort.PortName == null ? "" : _serialPort.PortName;
         }
-        /// <summary>
-        /// Send command to Devices.
-        /// </summary>
-        /// <returns>Boolean</returns>
-        public Stated Transmitter(string command)
+
+        private delegate void getStatus(string data);
+        private void StateInfo(string data)
         {
-            status = new Stated();
+            switch (data.ToUpper())
+            {
+                case "12":
+                    _invoke = data.ToUpper();
+                    break;
+                case "00":
+                    _invoke = Status.Ready.ToString();
+                    break;
+                case "3E":
+                    _invoke = Status.Enable_BA_if_hopper_problems_recovered.ToString();
+                    break;
+                case "5E":
+                    _invoke = Status.Inhibit_BA_if_hopper_problems_occurred.ToString();
+                    break;
+                case "01":
+                    _invoke = Status.Motor_Problems.ToString();
+                    break;
+                case "02":
+                    _invoke = Status.Insufficient_Coin.ToString();
+                    break;
+                case "03":
+                    _invoke = Status.Dedects_coin_dispensing_activity_after_suspending_the_dispene_signal.ToString();
+                    break;
+                case "04":
+                    _invoke = Status.Reserved.ToString();
+                    break;
+                case "05":
+                    _invoke = Status.Prism_Sensor_Failure.ToString();
+                    break;
+                case "06":
+                    _invoke = Status.Shaft_Sensor_Failure.ToString();
+                    break;
+                default:
+                    _invoke = "";
+                    break;
+            }
+        }
+        private bool CallState(SerialPort serialPort)
+        {
+            byte[] rxBytes = { };
+            bool readstate = false;
+            if (serialPort.IsOpen)
+            {
+                serialPort.ReadTimeout = 1000;
+                int count = serialPort.BytesToRead;
+                if (count > 2) { readstate = true; }
+                int totBytesRead = 0;
+                rxBytes = new byte[count];
+                while (totBytesRead < count)
+                {
+                    int bytesRead = serialPort.Read(rxBytes, 0, count - totBytesRead);
+                    totBytesRead += bytesRead;
+                }
+                getStatus get = new getStatus(StateInfo);
+                get(ConvertByteToString(rxBytes));
+            }
+            return readstate;
+        }
+
+        private bool Enable()
+        {
+            byte[] data = { };
+            bool state = false;
             try
             {
+                if (!_serialPort.IsOpen)
+                {
+                    _serialPort.Open();
+                }
+                if (_serialPort.IsOpen)
+                {
+                    do
+                    {
+                      data = ConvertHexToByte("70");
+                      _serialPort.Write(data, 0, data.Length);
+                      Thread.Sleep(10);
+                      state = CallState(_serialPort);
+                    } while (state);
 
+                    if (_invoke.Equals("12"))
+                    {
+                        state = true;
+                    }
+                }
             }
-            catch (Exception ex)
+            catch(Exception exception)
             {
-                OnMessage(new Events(ex.Message));
+                if (_serialPort.IsOpen)
+                {
+                    _serialPort.Close();
+                }
+                _invoke = Status.Unavailable.ToString();
+                Console.WriteLine("exception : " + exception);
             }
-            return status;
+            return state;
         }
     }
 }
