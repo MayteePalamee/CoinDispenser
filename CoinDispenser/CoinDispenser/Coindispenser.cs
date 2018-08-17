@@ -52,8 +52,8 @@ namespace CoinDispenser
         public Boolean Dispense(int coin)
         {
             byte[] data = { };
-            bool state = false;
-            int count = 0;
+            bool state = true;
+            bool result = false;
             try
             {
                 if (!_serialPort.IsOpen){
@@ -61,7 +61,7 @@ namespace CoinDispenser
                 }
                     if (_serialPort.IsOpen)
                     {
-                    for (int index = 0; index < coin; index++)
+                    do
                     {
                         data = ConvertHexToByte("80");
                         _serialPort.Write(data, 0, data.Length);
@@ -74,12 +74,32 @@ namespace CoinDispenser
                         data = ConvertHexToByte("10");
                         _serialPort.Write(data, 0, data.Length);
                         Thread.Sleep(1);
-                        count++;
-                    }
-                    if(coin == count)
-                    {
-                        state = true;
-                    }
+                        coin--;
+                        if (Enable())
+                        {
+                            if (_serialPort.IsOpen)
+                            {
+                                do
+                                {
+                                    data = ConvertHexToByte("72");
+                                    _serialPort.Write(data, 0, data.Length);
+                                    Thread.Sleep(10);
+                                    result = CallState(_serialPort);
+                                    Thread.Sleep(100);
+                                } while (result);
+                            }
+                        }
+
+                        if (!_invoke.Equals(Status.Ready.ToString()) &&
+                            !_invoke.Equals(Status.Inhibit_BA_if_hopper_problems_occurred.ToString()) &&
+                            !_invoke.Equals(Status.Enable_BA_if_hopper_problems_recovered.ToString()) &&
+                            !_invoke.Equals(""))
+                        {
+                            Console.WriteLine("Error : " + _invoke);
+                            break;
+                        }
+                        Console.WriteLine("Remain : " + coin);
+                    } while (coin != 0);
                 }
                }
             catch (Exception exception)
@@ -91,6 +111,11 @@ namespace CoinDispenser
                 _invoke = Status.Unavailable.ToString();
                 Console.WriteLine("exception : " + exception);
             }
+            if (_serialPort.IsOpen)
+            {
+                _serialPort.Close();
+            }
+            Console.WriteLine("Coin Balance : " + coin);
             return state;
         }
         /// <summary>
@@ -130,6 +155,10 @@ namespace CoinDispenser
                 _invoke = Status.Unavailable.ToString();
                 Console.WriteLine("exception : " + exception);
             }
+             if (_serialPort.IsOpen)
+            {
+                _serialPort.Close();
+            }
             return _invoke;
         }
         /// <summary>
@@ -151,8 +180,6 @@ namespace CoinDispenser
                     {
                         data = ConvertHexToByte("73");
                         _serialPort.Write(data, 0, data.Length);
-
-                        CallState(_serialPort);
                     }
                 }
             }
@@ -164,6 +191,10 @@ namespace CoinDispenser
                 }
                 _invoke = Status.Unavailable.ToString();
                 Console.WriteLine("exception : " + exception);
+            }
+            if (_serialPort.IsOpen)
+            {
+                _serialPort.Close();
             }
             return _invoke;
         }
@@ -235,6 +266,7 @@ namespace CoinDispenser
         {
             byte[] rxBytes = { };
             bool readstate = false;
+            _invoke = "";
             if (serialPort.IsOpen)
             {
                 serialPort.ReadTimeout = 1000;
