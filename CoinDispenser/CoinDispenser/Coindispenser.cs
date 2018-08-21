@@ -7,7 +7,7 @@ namespace CoinDispenser
     /// <summary>
     /// <para>Coin Dispenser class</para>
     /// </summary>
-    public class Coindispenser : SerialPortHelper
+    public class CoinDispenser : SerialPortHelper
     {
         /*Initial = "12", 
           Ready = "00",
@@ -24,7 +24,7 @@ namespace CoinDispenser
           Initial2 = "73",
           State = "72",
           Reset = "80",*/
-        private String _invoke = "";
+        private Status _invoke = Status.Unknown;
         private InitialPort initPort;
         private SerialPort _serialPort = new SerialPort();
 
@@ -53,7 +53,6 @@ namespace CoinDispenser
         {
             byte[] data = { };
             bool state = true;
-            bool result = false;
             try
             {
                 if (!_serialPort.IsOpen){
@@ -61,45 +60,39 @@ namespace CoinDispenser
                 }
                     if (_serialPort.IsOpen)
                     {
-                    do
+
+                    while (coin != 0)
                     {
+                        do
+                        {
+                            CallBackState();
+                        } while (_invoke.Equals(Status.Unknown));
+                        Thread.Sleep(500);
+                        if (!_invoke.Equals(Status.Ready) &&
+                            !_invoke.Equals(Status.Inhibit_BA_if_hopper_problems_occurred) &&
+                            !_invoke.Equals(Status.Enable_BA_if_hopper_problems_recovered) &&
+                            !_invoke.Equals(Status.Unknown))
+                        {
+                            state = false;
+                            coin = coin +1;
+                            break;
+                        }
+
+                        Thread.Sleep(1000);
                         data = ConvertHexToByte("80");
                         _serialPort.Write(data, 0, data.Length);
-                        Thread.Sleep(1);
+                        Thread.Sleep(100);
 
                         data = ConvertHexToByte("8140");
                         _serialPort.Write(data, 0, data.Length);
-                        Thread.Sleep(1);
+                        Thread.Sleep(100);
 
                         data = ConvertHexToByte("10");
                         _serialPort.Write(data, 0, data.Length);
-                        Thread.Sleep(1);
+                        Thread.Sleep(1000);
                         coin--;
-                        if (Enable())
-                        {
-                            if (_serialPort.IsOpen)
-                            {
-                                do
-                                {
-                                    data = ConvertHexToByte("72");
-                                    _serialPort.Write(data, 0, data.Length);
-                                    Thread.Sleep(10);
-                                    result = CallState(_serialPort);
-                                    Thread.Sleep(100);
-                                } while (result);
-                            }
-                        }
-
-                        if (!_invoke.Equals(Status.Ready.ToString()) &&
-                            !_invoke.Equals(Status.Inhibit_BA_if_hopper_problems_occurred.ToString()) &&
-                            !_invoke.Equals(Status.Enable_BA_if_hopper_problems_recovered.ToString()) &&
-                            !_invoke.Equals(""))
-                        {
-                            Console.WriteLine("Error : " + _invoke);
-                            break;
-                        }
                         Console.WriteLine("Remain : " + coin);
-                    } while (coin != 0);
+                    } 
                 }
                }
             catch (Exception exception)
@@ -108,7 +101,7 @@ namespace CoinDispenser
                 {
                     _serialPort.Close();
                 }
-                _invoke = Status.Unavailable.ToString();
+                _invoke = Status.Unavailable;
                 Console.WriteLine("exception : " + exception);
             }
             if (_serialPort.IsOpen)
@@ -118,33 +111,39 @@ namespace CoinDispenser
             Console.WriteLine("Coin Balance : " + coin);
             return state;
         }
+        private void CallBackState()
+        {
+            byte[] data = { };
+            bool state = false;
+            if (Enable())
+            {
+                if (_serialPort.IsOpen)
+                {
+                    do
+                    {
+                        data = ConvertHexToByte("72");
+                        _serialPort.Write(data, 0, data.Length);
+                        Thread.Sleep(10);
+                        state = CallState(_serialPort);
+                    } while (state);
+                }
+                Console.WriteLine("current state : " + _invoke);
+            }
+        }
         /// <summary>
         /// current status
         /// </summary>
         /// <returns>status</returns>
-        public String CurrentStatus()
+        public Status CurrentStatus()
         {
-            byte[] data = { };
-            bool state = false;
             try
             {
                 if (!_serialPort.IsOpen)
                 {
                     _serialPort.Open();
                 }
-                if (Enable())
-                {
-                    if (_serialPort.IsOpen)
-                    {
-                       do
-                        {
-                            data = ConvertHexToByte("72");
-                            _serialPort.Write(data, 0, data.Length);
-                            Thread.Sleep(10);
-                            state = CallState(_serialPort);
-                        } while (state);
-                    }
-                }
+                CallBackState();
+
             }
             catch (Exception exception)
             {
@@ -152,7 +151,7 @@ namespace CoinDispenser
                 {
                     _serialPort.Close();
                 }
-                _invoke = Status.Unavailable.ToString();
+                _invoke = Status.Unavailable;
                 Console.WriteLine("exception : " + exception);
             }
              if (_serialPort.IsOpen)
@@ -165,7 +164,7 @@ namespace CoinDispenser
         /// Reset Device
         /// </summary>
         /// <returns>Status</returns>
-        public String Reset()
+        public Status Reset()
         {
             byte[] data = { };
             try
@@ -189,7 +188,7 @@ namespace CoinDispenser
                 {
                     _serialPort.Close();
                 }
-                _invoke = Status.Unavailable.ToString();
+                _invoke = Status.Unavailable;
                 Console.WriteLine("exception : " + exception);
             }
             if (_serialPort.IsOpen)
@@ -228,37 +227,37 @@ namespace CoinDispenser
             switch (data.ToUpper())
             {
                 case "12":
-                    _invoke = data.ToUpper();
+                    _invoke = Status.Enable;
                     break;
                 case "00":
-                    _invoke = Status.Ready.ToString();
+                    _invoke = Status.Ready;
                     break;
                 case "3E":
-                    _invoke = Status.Enable_BA_if_hopper_problems_recovered.ToString();
+                    _invoke = Status.Enable_BA_if_hopper_problems_recovered;
                     break;
                 case "5E":
-                    _invoke = Status.Inhibit_BA_if_hopper_problems_occurred.ToString();
+                    _invoke = Status.Inhibit_BA_if_hopper_problems_occurred;
                     break;
                 case "01":
-                    _invoke = Status.Motor_Problems.ToString();
+                    _invoke = Status.Motor_Problems;
                     break;
                 case "02":
-                    _invoke = Status.Insufficient_Coin.ToString();
+                    _invoke = Status.Insufficient_Coin;
                     break;
                 case "03":
-                    _invoke = Status.Dedects_coin_dispensing_activity_after_suspending_the_dispene_signal.ToString();
+                    _invoke = Status.Dedects_coin_dispensing_activity_after_suspending_the_dispene_signal;
                     break;
                 case "04":
-                    _invoke = Status.Reserved.ToString();
+                    _invoke = Status.Reserved;
                     break;
                 case "05":
-                    _invoke = Status.Prism_Sensor_Failure.ToString();
+                    _invoke = Status.Prism_Sensor_Failure;
                     break;
                 case "06":
-                    _invoke = Status.Shaft_Sensor_Failure.ToString();
+                    _invoke = Status.Shaft_Sensor_Failure;
                     break;
                 default:
-                    _invoke = "";
+                    _invoke = Status.Unknown;
                     break;
             }
         }
@@ -266,11 +265,14 @@ namespace CoinDispenser
         {
             byte[] rxBytes = { };
             bool readstate = false;
-            _invoke = "";
             if (serialPort.IsOpen)
             {
-                serialPort.ReadTimeout = 1000;
-                int count = serialPort.BytesToRead;
+                int count = 0;
+                do
+                {
+                    count = serialPort.BytesToRead;
+                } while (count == 0);
+
                 if (count > 2) { readstate = true; }
                 int totBytesRead = 0;
                 rxBytes = new byte[count];
@@ -304,8 +306,7 @@ namespace CoinDispenser
                       Thread.Sleep(10);
                       state = CallState(_serialPort);
                     } while (state);
-
-                    if (_invoke.Equals("12"))
+                    if (_invoke.Equals(Status.Enable))
                     {
                         state = true;
                     }
@@ -317,7 +318,7 @@ namespace CoinDispenser
                 {
                     _serialPort.Close();
                 }
-                _invoke = Status.Unavailable.ToString();
+                _invoke = Status.Unavailable;
                 Console.WriteLine("exception : " + exception);
             }
             return state;

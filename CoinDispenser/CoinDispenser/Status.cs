@@ -12,6 +12,10 @@ namespace CoinDispenser
     public enum Status
     {
         /// <summary>
+        /// Initial
+        /// </summary>
+        Unknown = -1,
+        /// <summary>
         /// 
         /// </summary>
         Ready,
@@ -54,6 +58,10 @@ namespace CoinDispenser
         /// <summary>
         /// 
         /// </summary>
-        Unavailable
+        Unavailable,
+        /// <summary>
+        /// Enable
+        /// </summary>
+        Enable = 12
     }
 }
